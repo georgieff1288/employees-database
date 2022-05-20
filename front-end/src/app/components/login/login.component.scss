@@ -1,0 +1,29 @@
+@import "../../../scss/variables";
+
+.form-container{
+    width: 500px;
+    padding-top: 50px;
+    padding-bottom: 50px;    
+}
+
+input{
+    background:$input-background;
+    margin-bottom: 20px;
+    height: 50px;
+}
+
+#btn-login:disabled{
+    background-color:rgb(238, 238, 238);
+    color: rgb(153, 153, 153);
+}
+
+.btn{
+    width: 150px;
+    background-color:$btn-background;  
+    font-family: Roboto;
+    font-weight: bold;
+}
+
+span{
+    color:red;
+}
