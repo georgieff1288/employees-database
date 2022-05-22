@@ -1,5 +1,28 @@
 <div class="container-fluid header-container">
-    <div class="">
-        <a class="large-text" routerLink="/">EmployeesDb</a>
+    <div class="nav-container d-flex justify-content-between">
+        <div class="my-4">
+            <a class="large-text" routerLink="/">EmployeesDb</a>
+        </div>
+        <div class="">
+            <!-- <a *ngIf="!auth.isLoggedIn" class="medium-text" routerLink="/login">Login</a>
+            <a *ngIf="auth.isLoggedIn" class="medium-text" (click)="logout()">Logut</a> -->
+            <nav class="navbar navbar-expand-lg navbar-light mt-2" [ngClass]=" { 'navbarOpen': show }">
+                <div class="container-fluid">
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{ 'show': show }">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                      <li class="nav-item">
+                        <a *ngIf="!auth.isLoggedIn" class="nav-link medium-text" aria-current="page" routerLink="/login">Login</a>
+                      </li>
+                      <li class="nav-item">
+                        <a *ngIf="auth.isLoggedIn" class="nav-link medium-text" (click)="logout()" style="cursor: pointer;">Logout</a>
+                      </li>                      
+                    </ul>
+                  </div>
+                </div>
+              </nav>
+        </div>
     </div>
 </div>

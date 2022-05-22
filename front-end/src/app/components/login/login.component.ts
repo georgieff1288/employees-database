@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+
 
 @Component({
   selector: 'app-login',
@@ -6,13 +9,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent  {
+  public errorMsg: string = '';
 
-  constructor() { }
+  constructor(private auth: AuthService, public router: Router) { }
 
 
 
-  login(formValue: { email: string, password: string }) {
-    console.log(formValue.email + " - " + formValue.password);
+  loginUser(formValue: { email: string, password: string }) {
+    this.errorMsg = ''
+    this.auth.login(formValue).subscribe((response) => {  
+        localStorage.setItem('access_token', response.token);
+        this.router.navigate(['/']);
+    }, (error)=>{
+      this.errorMsg = error;     
+    })
   }
 
 }

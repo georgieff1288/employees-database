@@ -4,8 +4,8 @@
     background: $primary-color;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;    
     height: 80px;
-    display: flex;
-    align-items: center;
+    // display: flex;
+    // align-items: center;
     padding-left: $padding-x;
     padding-right: $padding-x;
     @media (max-width: $breakpoint-medium) {
@@ -19,4 +19,15 @@
 
 .header-container a:hover {
     color: $secondary-text-color;
+}
+
+.nav-container{
+    width: 100%;
+}
+
+.show{
+    margin-top: 10px;
+    text-align: center;
+    border-radius: 5px;
+    background-color: $btn-disabled-background;
 }
