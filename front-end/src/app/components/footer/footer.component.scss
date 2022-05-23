@@ -8,8 +8,8 @@
     padding-top: 50px;
     padding-bottom: 50px;
     @media (max-width: $breakpoint-medium) {
-        padding-left: 10px;
-        padding-right: 10px;
+        padding-left: $padding-x-medium;
+        padding-right: $padding-x-medium;
     }
 }
 

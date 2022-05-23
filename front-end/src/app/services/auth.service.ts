@@ -1,31 +1,36 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private loginUrl = "http://localhost:3000/api/login"
+  private loginUrl = "http://localhost:3000/api/login";
 
-  constructor( private http: HttpClient, private router: Router ) { }
-
-  login(user: any){    
-    return this.http.post<any>(this.loginUrl, user).pipe(catchError(this.handleError));
+  constructor( private http: HttpClient, private router: Router, private cookies: CookieService ) { }
+  
+  login(user: any){ 
+    return this.http.post<any>(this.loginUrl, user, {withCredentials: true}).pipe(catchError(this.handleError));
   }
 
   logout(): void{
-    let removeToken = localStorage.removeItem('access_token');
-    if (removeToken == null) {
-      this.router.navigate(['login']);
-    }
+    localStorage.removeItem('access_token');
+    this.cookies.delete('jwt');
+    this.router.navigate(['login']);
   }
 
   get isLoggedIn(): boolean {
-    let authToken = localStorage.getItem('access_token');
+    let authToken = localStorage.getItem('access_token');    
     return authToken !== null ? true : false;
+  }
+
+  get getUserEmail() {
+    let email = localStorage.getItem('access_token');    
+    return email;
   }
 
   private handleError(error: HttpErrorResponse) {

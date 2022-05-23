@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
 
 const { PORT, DATABASE, SECRET } = require('./config')
@@ -23,9 +24,15 @@ db.connect(err => {
 
 const app = express();
 
-app.use(cors({
-    origin: '*'
-}));
+app.use(cookieParser());
+
+// app.use(cors({
+//     origin: '*'
+// }));
+
+app.use(cors({origin: [
+    "http://localhost:4200"
+  ], credentials: true}));
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -39,6 +46,7 @@ app.post('/api/login', (req, res)=>{
         email: req.body.email,
         password: req.body.password
     }
+    
     let sql = `SELECT * FROM users WHERE email = ? AND password = ?`;
     let query = db.query(sql, [user.email, user.password], (err, result) => {
         if(err){
@@ -52,11 +60,20 @@ app.post('/api/login', (req, res)=>{
                 message: 'Invalid credentials'
               })
         }
-        let token = jwt.sign({ userId: dbUser.id}, SECRET);
-        return res.status(200).json({
-            message: 'Login sucess',
-            token: token
-        })
+        let payloads = {
+            id: dbUser.id,
+            email: dbUser.email,
+            password: dbUser.password
+        };
+        let options = {expiresIn: '2d'};
+
+        let token = jwt.sign(payloads, SECRET, options);
+
+        res.cookie('jwt', token);
+        res.status(200).json({
+            message: 'Login succes',
+            userEmail: dbUser.email
+        });    
     })
 });
 

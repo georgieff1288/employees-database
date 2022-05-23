@@ -18,7 +18,7 @@ export class LoginComponent  {
   loginUser(formValue: { email: string, password: string }) {
     this.errorMsg = ''
     this.auth.login(formValue).subscribe((response) => {  
-        localStorage.setItem('access_token', response.token);
+        localStorage.setItem('access_token', response.userEmail);
         this.router.navigate(['/']);
     }, (error)=>{
       this.errorMsg = error;     
