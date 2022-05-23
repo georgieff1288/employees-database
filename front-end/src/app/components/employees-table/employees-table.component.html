@@ -1,0 +1,10 @@
+<div class="table-container container-fluid d-flex align-items-center justify-content-center">
+    <p *ngIf="errorMsg" class="large-text" style="color: red;">{{errorMsg}}</p>
+    <div *ngIf="employees.length>0">
+        <ul *ngFor="let employee of employees" class="">
+            <li class="">
+                {{employee.name}}
+            </li> 
+        </ul>  
+    </div>
+</div>

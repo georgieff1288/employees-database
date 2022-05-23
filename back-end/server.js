@@ -26,13 +26,10 @@ const app = express();
 
 app.use(cookieParser());
 
-// app.use(cors({
-//     origin: '*'
-// }));
-
 app.use(cors({origin: [
     "http://localhost:4200"
   ], credentials: true}));
+
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -77,7 +74,44 @@ app.post('/api/login', (req, res)=>{
     })
 });
 
+app.get('/api/employees', (req, res)=>{
+    let token = req.cookies.jwt;
+    if(!token){
+        return res.status(401).json({
+            message: 'Unauthorized'
+        })
+    }
+    let decodedToken = jwt.verify(token, SECRET);
+    let dbUser = '';
+    let userSql = `SELECT * FROM users WHERE email = ? AND password = ?`;
+    let userQuery = db.query(userSql, [decodedToken.email, decodedToken.password], (err, result) => {
+        if(err){
+            return res.status(500).json({
+                message: 'Server error'
+            })
+        }     
+        dbUser = result[0];
+        if(!dbUser){
+            return res.status(401).json({
+                message: 'Unauthorized'
+            })
+        } 
+    })
 
+    // if(decodedToken.email != dbUser.email || decodedToken.password != dbUser.password){
+    //     return res.status(401).json({
+    //         message: 'Unauthorized'
+    //     })
+    // }
+
+    let sql = 'SELECT * FROM employees ORDER BY name ASC';    
+    let query = db.query(sql, (err, result) => {
+        if(err){
+            console.log(err);
+        }
+        res.send(result)
+    })
+})
 
 
 app.listen(PORT, () => {
