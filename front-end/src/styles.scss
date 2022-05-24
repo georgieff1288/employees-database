@@ -27,7 +27,16 @@
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
-    font-size: 15px;
+    font-size: 16px;
+    line-height: 20px;
+    color: $primary-text-color;
+}
+
+.x-small-text{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
     line-height: 20px;
     color: $primary-text-color;
 }

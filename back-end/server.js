@@ -100,12 +100,13 @@ app.get('/api/employees', (req, res)=>{
             message: auth.message
         })
     }
-
-    let sql = 'SELECT * FROM employees ORDER BY name ASC';    
+    
+    let sql = 'SELECT * FROM employees INNER JOIN departments ON employees.department_id=departments.id ORDER BY name ASC';    
     let query = db.query(sql, (err, result) => {
         if(err){
             console.log(err);
         }
+        console.log(result);
         res.send(result)
     })
 })

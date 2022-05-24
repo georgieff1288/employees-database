@@ -1,3 +1,30 @@
+@import "../../../scss/variables";
+
 .table-container{
     min-height: 300px;
+}
+
+.emp-table{
+    overflow-x: auto;
+}
+
+.employee-row:nth-child(odd) {
+    background: $trow-background;
+}
+
+.employee-row:hover{
+    background: $trow-hover-background;
+}
+
+a{
+    text-decoration: none;
+    border-radius: 3px;
+    border: 1px solid black;
+    cursor: pointer;
+    background: $btn-disabled-background;
+}
+
+a:hover {
+    color: $primary-text-color;
+    background: $btn-background;
 }
