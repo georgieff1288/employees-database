@@ -25,7 +25,7 @@ export class AuthService {
 
   get isLoggedIn(): boolean {
     let authToken = localStorage.getItem('access_token');    
-    return authToken !== null ? true : false;
+    return authToken !== null ? true : false;    
   }
 
   get getUserEmail() {

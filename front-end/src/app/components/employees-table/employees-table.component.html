@@ -1,5 +1,6 @@
 <div class="table-container container-fluid d-flex align-items-center justify-content-center">
     <p *ngIf="errorMsg" class="large-text" style="color: red;">{{errorMsg}}</p>
+    <p *ngIf="employees.length==0 && !errorMsg" class="large-text">Loading...</p>
     <div *ngIf="employees.length>0">
         <ul *ngFor="let employee of employees" class="">
             <li class="">

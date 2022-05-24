@@ -37,6 +37,24 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
+function isAuth(token){
+    if(!token){
+        return {status: 401, message: 'Unauthorized'}  
+    }
+    let decodedToken = jwt.verify(token, SECRET);
+    let dbUser = '';
+    let sql = `SELECT * FROM users WHERE email = ? AND password = ?`;
+    let query = db.query(sql, [decodedToken.email, decodedToken.password], (err, result) => {
+        if(err){
+            return {status: 500, message: 'Server error'}            
+        }     
+        dbUser = result[0];
+        if(!dbUser){            
+            return {status: 401, message: 'Unauthorized'}  
+        } 
+    })
+}
+
 
 app.post('/api/login', (req, res)=>{
     let user = {
@@ -76,33 +94,12 @@ app.post('/api/login', (req, res)=>{
 
 app.get('/api/employees', (req, res)=>{
     let token = req.cookies.jwt;
-    if(!token){
-        return res.status(401).json({
-            message: 'Unauthorized'
+    let auth = isAuth(token);
+    if(auth){
+        return res.status(auth.status).json({
+            message: auth.message
         })
     }
-    let decodedToken = jwt.verify(token, SECRET);
-    let dbUser = '';
-    let userSql = `SELECT * FROM users WHERE email = ? AND password = ?`;
-    let userQuery = db.query(userSql, [decodedToken.email, decodedToken.password], (err, result) => {
-        if(err){
-            return res.status(500).json({
-                message: 'Server error'
-            })
-        }     
-        dbUser = result[0];
-        if(!dbUser){
-            return res.status(401).json({
-                message: 'Unauthorized'
-            })
-        } 
-    })
-
-    // if(decodedToken.email != dbUser.email || decodedToken.password != dbUser.password){
-    //     return res.status(401).json({
-    //         message: 'Unauthorized'
-    //     })
-    // }
 
     let sql = 'SELECT * FROM employees ORDER BY name ASC';    
     let query = db.query(sql, (err, result) => {

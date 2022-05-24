@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from 'src/app/services/employee.service';
-import { Employee } from 'src/app/shared/models/employee.model';
 
 @Component({
   selector: 'app-employees-table',
