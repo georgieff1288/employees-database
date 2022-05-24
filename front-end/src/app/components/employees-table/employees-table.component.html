@@ -1,7 +1,7 @@
-<div class="table-container container-fluid d-flex align-items-center justify-content-center">
+<div class="table-container container-fluid d-flex align-items-center justify-content-center py-3">
     <p *ngIf="errorMsg" class="large-text" style="color: red;">{{errorMsg}}</p>
     <p *ngIf="employees.length==0 && !errorMsg" class="large-text">Loading...</p>
-    <div *ngIf="employees.length>0" class="emp-table">        
+    <div *ngIf="employees.length>0" class="emp-table" style="width: 100%">        
         <table class="table">
             <thead>
                 <tr>
@@ -21,7 +21,7 @@
                     <td class="small-text">{{employee.department_name}}</td>
                     <td class="small-text">{{employee.position}}</td>
                     <td class="small-text">${{employee.salary}}</td>      
-                    <td><a class="small-text p-1">Edit</a></td>                                    
+                    <td><a class="small-text p-1" routerLink="/edit-employee/{{employee.id}}">Edit</a></td>                                    
                 </tr>                            
             </tbody>
         </table>

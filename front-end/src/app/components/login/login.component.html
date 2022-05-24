@@ -3,7 +3,7 @@
         <h2 class="text-center large-text">Please login to proceed</h2>
         <span class="text-center">{{errorMsg}}</span>
         <form #loginForm="ngForm" (ngSubmit)="loginUser(loginForm.value)">
-
+            
             <label for="email">Email: </label>  
             <span *ngIf="emailInput.invalid && emailInput.touched"> Please enter valid email</span>
             <input 
@@ -14,7 +14,7 @@
                 class="form-control" 
                 required 
                 email/>
-          
+            
             <label for="password">Password: </label>
             <span *ngIf="passwordInput.invalid && passwordInput.touched"> Password must be at least 6 characters</span>
             <input type="password"
@@ -24,7 +24,7 @@
                 class="form-control" 
                 minlength="6" 
                 required/>
-    
+            
             <div class="d-flex justify-content-center">
                 <button class="btn" type="submit" id="btn-login" [disabled]="!loginForm.valid">Login</button>
             </div>

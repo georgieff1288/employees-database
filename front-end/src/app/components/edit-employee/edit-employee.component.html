@@ -1,0 +1,73 @@
+<div class="edit-container d-flex justify-content-center align-items-center py-3">
+    <p *ngIf="errorMsg" class="large-text" style="color: red;">{{errorMsg}}</p>
+    <div *ngIf="employee.length>0" class="full-width">
+        <form [formGroup]="employeeForm" (ngSubmit)="editEmployee()">            
+            <div class="d-flex flex-column flex-md-row">
+                <div class="full-width pe-0 pe-md-5">
+                    <label for="name">Name: </label>  
+                    <span *ngIf="name.invalid && (name.dirty || name.touched)">
+                        <span *ngIf="name.errors?.['required']"> Name is required.</span>
+                    </span>
+                    <input class="form-control" id="name" type="text" formControlName="name"> 
+                </div>
+                <div class="full-width ps-0 ps-md-5">
+                    <label for="address">Address: </label> 
+                    <span *ngIf="address.invalid && (address.dirty || address.touched)">
+                        <span *ngIf="address.errors?.['required']"> Address is required.</span>
+                    </span>                     
+                    <input class="form-control" id="address" type="text" formControlName="address">
+                </div>
+            </div>
+            <div class="d-flex flex-column flex-md-row">
+                <div class="full-width pe-0 pe-md-5">
+                    <label for="phone">Phone: </label>
+                    <span *ngIf="phone.invalid && (phone.dirty || phone.touched)">
+                        <span *ngIf="phone.errors?.['required']"> Phone is required.</span>
+                    </span>  
+                    <input class="form-control" id="phone" type="text" formControlName="phone">
+                </div>
+                <div class="full-width ps-0 ps-md-5">
+                    <label for="salary">Salary: </label> 
+                    <span *ngIf="salary.invalid && (salary.dirty || salary.touched)">
+                        <span *ngIf="salary.errors?.['required']"> Salary is required.</span>
+                    </span> 
+                    <input class="form-control" id="salary" type="text" formControlName="salary">
+                </div>
+            </div>     
+            <div class="full-width d-flex">               
+                <select class="form-select" aria-label="Default select example" id="country" formControlName="position" (change)="selectChange($event)">
+                    <optgroup label="Marketing">
+                        <option [ngValue]="positions[0]">{{positions[0]}}</option>
+                        <option [ngValue]="positions[1]">{{positions[1]}}</option>
+                        <option [ngValue]="positions[2]">{{positions[2]}}</option>
+                        <option [ngValue]="positions[3]">{{positions[3]}}</option>
+                        <option [ngValue]="positions[4]">{{positions[4]}}</option>
+                    </optgroup> 
+                    <optgroup label="Sales">
+                        <option [ngValue]="positions[5]">{{positions[5]}}</option>
+                        <option [ngValue]="positions[6]">{{positions[6]}}</option>
+                        <option [ngValue]="positions[7]">{{positions[7]}}</option>
+                        <option [ngValue]="positions[8]">{{positions[8]}}</option>                        
+                    </optgroup>      
+                    <optgroup label="HR">
+                        <option [ngValue]="positions[9]">{{positions[9]}}</option>
+                        <option [ngValue]="positions[10]">{{positions[10]}}</option>
+                        <option [ngValue]="positions[11]">{{positions[11]}}</option>
+                    </optgroup> 
+                    <optgroup label="Finance">
+                        <option [ngValue]="positions[12]">{{positions[12]}}</option>
+                        <option [ngValue]="positions[13]">{{positions[13]}}</option>
+                        <option [ngValue]="positions[14]">{{positions[14]}}</option>
+                        <option [ngValue]="positions[15]">{{positions[15]}}</option>
+                    </optgroup>              
+                </select>
+            </div>
+            <div class="d-flex justify-content-center my-3">
+                <button class="btn" type="submit" id="btn-edit" [disabled]="!employeeForm.valid">Edit</button>
+            </div>
+        </form>
+        <div class="d-flex justify-content-center my-3">
+            <button class="btn" type="submit" id="btn-edit" (click)="delete()" style="background: rgb(238, 72, 72);">Delete</button>
+        </div>
+    </div>
+</div>

@@ -11,14 +11,11 @@ export class EmployeesTableComponent implements OnInit {
   errorMsg: string = '';
   constructor(private emp: EmployeeService) { }
 
-  ngOnInit(): void {
-    this.employees =  this.emp.getAllEmployees().subscribe(
-      (response) => { 
-        this.employees = response;        
-      }, (error)=>{
-        this.errorMsg = error;     
-      }
-    );
+  ngOnInit(): void {    
+    this.emp.getAllEmployees().subscribe({
+      next: (res) => { this.employees = res},
+      error: (error) => this.errorMsg = error
+    });
   }
 
 }

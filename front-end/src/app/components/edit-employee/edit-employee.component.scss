@@ -1,0 +1,47 @@
+@import "../../../scss/variables";
+
+.edit-container{
+    min-height: 300px;
+    padding-left: $padding-x;
+    padding-right: $padding-x;
+    @media (max-width: $breakpoint-medium) {
+        padding-left: $padding-x-medium;
+        padding-right: $padding-x-medium;
+    }
+}
+
+input{
+    background:$input-background;
+    margin-bottom: 20px;
+    height: 50px;    
+}
+
+#btn-edit:disabled{
+    background-color: rgb(238, 238, 238);
+    color: rgb(153, 153, 153);
+}
+
+.btn{
+    width: 150px;
+    background-color:$btn-background;  
+    font-family: Roboto;
+    font-weight: bold;
+}
+
+span{
+    color: red;
+}
+
+.full-width{
+    width: 100%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}

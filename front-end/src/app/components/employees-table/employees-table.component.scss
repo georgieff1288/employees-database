@@ -2,6 +2,12 @@
 
 .table-container{
     min-height: 300px;
+    padding-left: $padding-x;
+    padding-right: $padding-x;
+    @media (max-width: $breakpoint-medium) {
+        padding-left: $padding-x-medium;
+        padding-right: $padding-x-medium;
+    }
 }
 
 .emp-table{

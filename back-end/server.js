@@ -101,15 +101,32 @@ app.get('/api/employees', (req, res)=>{
         })
     }
     
-    let sql = 'SELECT * FROM employees INNER JOIN departments ON employees.department_id=departments.id ORDER BY name ASC';    
+    let sql = 'SELECT * FROM employees INNER JOIN departments ON employees.department_id=departments.department_id ORDER BY name ASC';    
     let query = db.query(sql, (err, result) => {
         if(err){
             console.log(err);
         }
-        console.log(result);
         res.send(result)
     })
-})
+});
+
+app.get('/api/employee/:id', (req, res)=>{
+    let token = req.cookies.jwt;
+    let auth = isAuth(token);
+    if(auth){
+        return res.status(auth.status).json({
+            message: auth.message
+        })
+    }
+    let data = req.params.id;
+    let sql = 'SELECT * FROM employees INNER JOIN departments ON employees.department_id=departments.department_id WHERE id = ?';    
+    let query = db.query(sql, data, (err, result) => {
+        if(err){
+            console.log(err);
+        }
+        res.send(result)
+    })
+});
 
 
 app.listen(PORT, () => {
