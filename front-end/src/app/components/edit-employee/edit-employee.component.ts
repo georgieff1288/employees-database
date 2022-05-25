@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from 'src/app/services/employee.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -15,7 +15,7 @@ export class EditEmployeeComponent implements OnInit {
   errorMsg: string = '';
   employeeForm: any;
 
-  constructor(private emp: EmployeeService, private route: ActivatedRoute) { }
+  constructor(private emp: EmployeeService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.positions = this.emp.getAllPositions();
@@ -48,10 +48,16 @@ export class EditEmployeeComponent implements OnInit {
   get salary() { return this.employeeForm.get('salary'); }
 
   editEmployee(){    
-    console.log(this.employeeForm.value);   
+    this.emp.updateEmployee(this.employeeForm.value, this.id).subscribe({
+      next: res=> this.router.navigate(['/employees']),
+      error: error => this.errorMsg = error            
+  });
   }
 
   delete(){    
-    console.log('deleted - ' + this.id);   
+    this.emp.deleteEmployee(this.id).subscribe({
+      next: res=> this.router.navigate(['/employees']),
+      error: error => this.errorMsg = error            
+  }); 
   }
 }

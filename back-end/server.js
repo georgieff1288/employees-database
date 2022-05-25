@@ -53,6 +53,7 @@ function isAuth(token){
             return {status: 401, message: 'Unauthorized'}  
         } 
     })
+    return;
 }
 
 
@@ -105,6 +106,9 @@ app.get('/api/employees', (req, res)=>{
     let query = db.query(sql, (err, result) => {
         if(err){
             console.log(err);
+            return res.status(500).json({
+                message: 'Server error'
+            })
         }
         res.send(result)
     })
@@ -123,11 +127,74 @@ app.get('/api/employee/:id', (req, res)=>{
     let query = db.query(sql, data, (err, result) => {
         if(err){
             console.log(err);
+            return res.status(500).json({
+                message: 'Server error'
+            })
         }
         res.send(result)
     })
 });
 
+app.put('/api/update-employee/:id', (req, res)=>{
+    let token = req.cookies.jwt;
+    let auth = isAuth(token);
+    if(auth){
+        return res.status(auth.status).json({
+            message: auth.message
+        })
+    }    
+    
+    let id = req.params.id;
+    let emp = req.body;
+    if(!emp.name || !emp.address || !emp.phone || !emp.position_id || !emp.salary){
+        return res.status(400).json({
+            message: 'All fields required'
+        })
+    }
+
+    let sql = 'UPDATE employees SET name=?, address=?, phone=?, position_id=?, salary=? WHERE id=?';
+    let query = db.query(sql, [emp.name, emp.address, emp.phone, emp.position_id, emp.salary, id], (err, result) => {
+        if(err){
+            console.log(err);
+            return res.status(500).json({
+                message: 'Server error'
+            })
+        }
+        return res.status(200).json({
+            message: 'Field updated successfully'
+        })
+    })
+});
+
+app.delete('/api/delete-employee/:id', (req, res)=>{
+    let token = req.cookies.jwt;
+    let auth = isAuth(token);
+    if(auth){
+        return res.status(auth.status).json({
+            message: auth.message
+        })
+    }    
+    
+    let id = req.params.id;
+    
+    let sql = 'DELETE FROM  employees WHERE id=?';    
+    let query = db.query(sql, id, (err, result) => {
+        if(err){
+            console.log(err);
+            return res.status(500).json({
+                message: 'Server error'
+            })
+        }
+        if(result.fieldCount == 0){
+            return res.status(404).json({
+                message: 'An employee with such id was not found'
+            })
+        }
+        return res.status(200).json({
+            message: 'Field deleted successfully'
+        })
+    })
+});
 
 
 app.listen(PORT, () => {
