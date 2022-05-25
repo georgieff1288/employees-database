@@ -1,6 +1,6 @@
 <div class="table-container container-fluid d-flex align-items-center justify-content-center py-3">
     <p *ngIf="errorMsg" class="large-text" style="color: red;">{{errorMsg}}</p>
-    <p *ngIf="employees.length==0 && !errorMsg" class="large-text">Loading...</p>
+    <p *ngIf="employees.length==0 && !errorMsg" class="large-text">{{notification}}</p>
     <div *ngIf="employees.length>0" class="emp-table" style="width: 100%">        
         <table class="table">
             <thead>

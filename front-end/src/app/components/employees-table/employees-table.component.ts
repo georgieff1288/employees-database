@@ -9,11 +9,15 @@ import { EmployeeService } from 'src/app/services/employee.service';
 export class EmployeesTableComponent implements OnInit {
   employees: any = [];
   errorMsg: string = '';
+  notification: string ='Loading...';
   constructor(private emp: EmployeeService) { }
 
   ngOnInit(): void {    
     this.emp.getAllEmployees().subscribe({
-      next: (res) => { this.employees = res},
+      next: (res) => {
+          this.employees = res
+          this.notification = 'There is no employees in database'
+        },
       error: (error) => this.errorMsg = error
     });
   }
