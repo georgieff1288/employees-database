@@ -101,7 +101,7 @@ app.get('/api/employees', (req, res)=>{
         })
     }
     
-    let sql = 'SELECT * FROM employees INNER JOIN departments ON employees.department_id=departments.department_id ORDER BY name ASC';    
+    let sql = 'SELECT * FROM employees INNER JOIN positions ON employees.position_id=positions.position_id INNER JOIN departments ON positions.department_id=departments.department_id ORDER BY name ASC';    
     let query = db.query(sql, (err, result) => {
         if(err){
             console.log(err);
@@ -119,7 +119,7 @@ app.get('/api/employee/:id', (req, res)=>{
         })
     }
     let data = req.params.id;
-    let sql = 'SELECT * FROM employees INNER JOIN departments ON employees.department_id=departments.department_id WHERE id = ?';    
+    let sql = 'SELECT * FROM employees INNER JOIN positions ON employees.position_id=positions.position_id WHERE id = ?';    
     let query = db.query(sql, data, (err, result) => {
         if(err){
             console.log(err);
@@ -127,6 +127,7 @@ app.get('/api/employee/:id', (req, res)=>{
         res.send(result)
     })
 });
+
 
 
 app.listen(PORT, () => {

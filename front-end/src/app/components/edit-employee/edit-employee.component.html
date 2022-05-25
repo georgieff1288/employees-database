@@ -34,33 +34,12 @@
                     <input class="form-control" id="salary" type="text" formControlName="salary">
                 </div>
             </div>     
-            <div class="full-width d-flex">               
-                <select class="form-select" aria-label="Default select example" id="country" formControlName="position" (change)="selectChange($event)">
-                    <optgroup label="Marketing">
-                        <option [ngValue]="positions[0]">{{positions[0]}}</option>
-                        <option [ngValue]="positions[1]">{{positions[1]}}</option>
-                        <option [ngValue]="positions[2]">{{positions[2]}}</option>
-                        <option [ngValue]="positions[3]">{{positions[3]}}</option>
-                        <option [ngValue]="positions[4]">{{positions[4]}}</option>
-                    </optgroup> 
-                    <optgroup label="Sales">
-                        <option [ngValue]="positions[5]">{{positions[5]}}</option>
-                        <option [ngValue]="positions[6]">{{positions[6]}}</option>
-                        <option [ngValue]="positions[7]">{{positions[7]}}</option>
-                        <option [ngValue]="positions[8]">{{positions[8]}}</option>                        
-                    </optgroup>      
-                    <optgroup label="HR">
-                        <option [ngValue]="positions[9]">{{positions[9]}}</option>
-                        <option [ngValue]="positions[10]">{{positions[10]}}</option>
-                        <option [ngValue]="positions[11]">{{positions[11]}}</option>
-                    </optgroup> 
-                    <optgroup label="Finance">
-                        <option [ngValue]="positions[12]">{{positions[12]}}</option>
-                        <option [ngValue]="positions[13]">{{positions[13]}}</option>
-                        <option [ngValue]="positions[14]">{{positions[14]}}</option>
-                        <option [ngValue]="positions[15]">{{positions[15]}}</option>
-                    </optgroup>              
-                </select>
+            <div class="d-flex justify-content-center py-3">
+                <select class="form-select" aria-label="Default select example" id="position" formControlName="position_id">
+                    <optgroup *ngFor="let dep of positions" [label]="dep.department">
+                        <option *ngFor = "let position of dep.positions" [ngValue]="position.id">{{position.name}}</option>
+                    </optgroup>
+                </select>                  
             </div>
             <div class="d-flex justify-content-center my-3">
                 <button class="btn" type="submit" id="btn-edit" [disabled]="!employeeForm.valid">Edit</button>

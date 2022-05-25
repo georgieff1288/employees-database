@@ -9,7 +9,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./edit-employee.component.scss']
 })
 export class EditEmployeeComponent implements OnInit {
-  positions: string[] = [];
+  positions: any;
   id: any;
   employee: any = [];
   errorMsg: string = '';
@@ -23,20 +23,18 @@ export class EditEmployeeComponent implements OnInit {
       name: new FormControl('', [Validators.required]),
       address: new FormControl('', [Validators.required]),
       phone: new FormControl('', [Validators.required]),
-      department_name: new FormControl('', [Validators.required]),
-      position: new FormControl('', [Validators.required]),
+      position_id: new FormControl('', [Validators.required]),
       salary: new FormControl('', [Validators.required])
     });
     this.id = this.route.snapshot.params['id'];
 
     this.emp.getEmployeeById(this.id).subscribe({
-      next: (res) => {this.employee = res
+      next: (res) => {this.employee = res        
         this.employeeForm.patchValue({
           name: this.employee[0].name,
           address: this.employee[0].address,
           phone: this.employee[0].phone,
-          department_name: this.employee[0].department_name,
-          position: this.employee[0].position,
+          position_id: this.employee[0].position_id,
           salary: this.employee[0].salary
         });        
       },
@@ -48,12 +46,6 @@ export class EditEmployeeComponent implements OnInit {
   get address() { return this.employeeForm.get('address'); }
   get phone() { return this.employeeForm.get('phone'); }
   get salary() { return this.employeeForm.get('salary'); }
-
-  selectChange(ev: any) {
-    let selectedIndex = ev.target.selectedIndex;
-    let optGroupLabel = ev.target.options[selectedIndex].parentNode.getAttribute('label');
-    this.employeeForm.patchValue({department_name: optGroupLabel});
-  }
 
   editEmployee(){    
     console.log(this.employeeForm.value);   

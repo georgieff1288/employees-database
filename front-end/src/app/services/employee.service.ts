@@ -20,7 +20,12 @@ export class EmployeeService {
   }
 
   getAllPositions(){
-    let positions = ['Director of marketing', 'Marketing analyst', 'Marketing coordinator', 'Marketing consultant', 'Marketing manager', 'National sales director', 'Regional sales manager', 'Inside sales representative', 'Sales assistant', 'Chief diversity officer', 'HR director', 'Director of recruiting', 'Chief financial officer', 'Client service finance', 'Credit analyst', 'Account broker'];
+    let positions =[
+      {'department':'Marketing', 'positions':[{'name':'Director of marketing', 'id':1}, {'name':'Marketing analyst', 'id':2}, {'name':'Marketing coordinator', 'id':3}, {'name':'Marketing consultant', 'id':4}, {'name':'Marketing manager', 'id':5}]},
+      {'department':'Sales', 'positions':[{'name':'National sales director', 'id':6}, {'name':'Regional sales manager', 'id':7}, {'name':'Inside sales representative', 'id':8}, {'name':'Sales assistant', 'id':9}]},
+      {'department':'HR', 'positions': [{'name':'Chief diversity officer', 'id':10}, {'name':'HR director', 'id':11}, {'name':'Director of recruiting', 'id':12}]},
+      {'department':'Finance', 'positions':[{'name':'Chief financial officer', 'id':13}, {'name':'Client service finance', 'id':14}, {'name':'Credit analyst', 'id':15}, {'name':'Account broker', 'id':16}]}];
+
     return positions;
   }
 

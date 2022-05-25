@@ -29,3 +29,10 @@
     border-radius: 5px;
     background-color: $btn-disabled-background;
 }
+
+nav{
+    margin-right: -16px;
+    @media (max-width: $breakpoint-large) {
+        margin-right: -12px;
+    }
+}
