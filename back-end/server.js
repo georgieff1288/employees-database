@@ -1,41 +1,11 @@
-const mysql = require('mysql');
 const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
 
-
-const { PORT, DATABASE, SECRET } = require('./config')
-
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: DATABASE
-});
-
-db.connect(err => {
-    if (err) {
-        throw err;
-    }
-    console.log('Connected to mysql database!');
-})
+const db = require('./config/msqlDb');
+const { PORT, SECRET } = require('./config/config')
 
 const app = express();
-
-app.use(cookieParser());
-
-app.use(cors({origin: [
-    "http://localhost:4200"
-  ], credentials: true}));
-
-
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-
-app.use(bodyParser.json());
+require('./config/express')(app);
 
 function isAuth(token){
     if(!token){
@@ -107,8 +77,7 @@ app.get('/api/employees', (req, res)=>{
         return res.status(auth.status).json({
             message: auth.message
         })
-    }
-    
+    }    
     let sql = 'SELECT * FROM employees INNER JOIN positions ON employees.position_id=positions.position_id INNER JOIN departments ON positions.department_id=departments.department_id ORDER BY name ASC';    
     let query = db.query(sql, (err, result) => {
         if(err){
@@ -149,8 +118,7 @@ app.put('/api/update-employee/:id', (req, res)=>{
         return res.status(auth.status).json({
             message: auth.message
         })
-    }    
-    
+    }       
     let id = req.params.id;
     let emp = req.body;
     let isValid = fieldsValidator(emp);
@@ -158,8 +126,7 @@ app.put('/api/update-employee/:id', (req, res)=>{
         return res.status(isValid.status).json({
             message: isValid.message
         })
-    }
-    
+    }    
     let sql = 'UPDATE employees SET name=?, address=?, phone=?, position_id=?, salary=? WHERE id=?';
     let query = db.query(sql, [emp.name, emp.address, emp.phone, emp.position_id, emp.salary, id], (err, result) => {
         if(err){
@@ -181,10 +148,8 @@ app.delete('/api/delete-employee/:id', (req, res)=>{
         return res.status(auth.status).json({
             message: auth.message
         })
-    }    
-    
-    let id = req.params.id;
-    
+    }        
+    let id = req.params.id;    
     let sql = 'DELETE FROM  employees WHERE id=?';    
     let query = db.query(sql, id, (err, result) => {
         if(err){
@@ -211,16 +176,14 @@ app.post('/api/add-employee', (req, res)=>{
         return res.status(auth.status).json({
             message: auth.message
         })
-    }    
-    
+    } 
     let emp = req.body;
     let isValid = fieldsValidator(emp);
     if(isValid){
         return res.status(isValid.status).json({
             message: isValid.message
         })
-    }
-    
+    }    
     let sql = 'INSERT INTO employees (name, address, phone, position_id, salary) VALUES(?, ?, ?, ?, ?)';
     let query = db.query(sql, [emp.name, emp.address, emp.phone, emp.position_id, emp.salary], (err, result) => {
         if(err){
