@@ -27,6 +27,10 @@ export class EmployeeService {
     return this.http.delete<Employee>(this.endPoint + 'delete-employee/' + id, {withCredentials: true}).pipe(catchError(this.handleError));
   }
 
+  addEmployee(employee: Employee){
+    return this.http.post<Employee>(this.endPoint + 'add-employee', employee, {withCredentials: true}).pipe(catchError(this.handleError));
+  }
+
   getAllPositions(){
     let positions =[
       {'department':'Marketing', 'positions':[{'name':'Director of marketing', 'id':1}, {'name':'Marketing analyst', 'id':2}, {'name':'Marketing coordinator', 'id':3}, {'name':'Marketing consultant', 'id':4}, {'name':'Marketing manager', 'id':5}]},

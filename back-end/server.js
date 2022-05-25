@@ -56,6 +56,13 @@ function isAuth(token){
     return;
 }
 
+function fieldsValidator(emp){
+    if(!emp.name || !emp.address || !emp.phone || !emp.position_id || !emp.salary){
+        return {status: 400, message: 'All fields required'}  
+    }
+    return;
+};
+
 
 app.post('/api/login', (req, res)=>{
     let user = {
@@ -146,12 +153,13 @@ app.put('/api/update-employee/:id', (req, res)=>{
     
     let id = req.params.id;
     let emp = req.body;
-    if(!emp.name || !emp.address || !emp.phone || !emp.position_id || !emp.salary){
-        return res.status(400).json({
-            message: 'All fields required'
+    let isValid = fieldsValidator(emp);
+    if(isValid){
+        return res.status(isValid.status).json({
+            message: isValid.message
         })
     }
-
+    
     let sql = 'UPDATE employees SET name=?, address=?, phone=?, position_id=?, salary=? WHERE id=?';
     let query = db.query(sql, [emp.name, emp.address, emp.phone, emp.position_id, emp.salary, id], (err, result) => {
         if(err){
@@ -185,7 +193,7 @@ app.delete('/api/delete-employee/:id', (req, res)=>{
                 message: 'Server error'
             })
         }
-        if(result.fieldCount == 0){
+        if(result.affectedRows == 0){
             return res.status(404).json({
                 message: 'An employee with such id was not found'
             })
@@ -196,6 +204,36 @@ app.delete('/api/delete-employee/:id', (req, res)=>{
     })
 });
 
+app.post('/api/add-employee', (req, res)=>{
+    let token = req.cookies.jwt;
+    let auth = isAuth(token);
+    if(auth){
+        return res.status(auth.status).json({
+            message: auth.message
+        })
+    }    
+    
+    let emp = req.body;
+    let isValid = fieldsValidator(emp);
+    if(isValid){
+        return res.status(isValid.status).json({
+            message: isValid.message
+        })
+    }
+    
+    let sql = 'INSERT INTO employees (name, address, phone, position_id, salary) VALUES(?, ?, ?, ?, ?)';
+    let query = db.query(sql, [emp.name, emp.address, emp.phone, emp.position_id, emp.salary], (err, result) => {
+        if(err){
+            console.log(err);
+            return res.status(500).json({
+                message: 'Server error'
+            })
+        }
+        return res.status(200).json({
+            message: 'The employee was added successfully'
+        })
+    })
+});
 
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);

@@ -16,6 +16,8 @@
                       </li>
                       <li class="nav-item">
                         <a *ngIf="auth.isLoggedIn" class="nav-link medium-text" aria-current="page" routerLink="/employees">Employees</a>
+                      </li><li class="nav-item">
+                        <a *ngIf="auth.isLoggedIn" class="nav-link medium-text" aria-current="page" routerLink="/add-employee">Add employee</a>
                       </li>
                       <li class="nav-item">
                         <a *ngIf="auth.isLoggedIn" class="nav-link medium-text" (click)="logout()" style="cursor: pointer;">Logout</a>

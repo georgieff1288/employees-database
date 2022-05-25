@@ -15,6 +15,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
 import { EmployeesTableComponent } from './components/employees-table/employees-table.component';
 import { EditEmployeeComponent } from './components/edit-employee/edit-employee.component';
+import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { EditEmployeeComponent } from './components/edit-employee/edit-employee.
     FooterComponent,
     LoginComponent,
     EmployeesTableComponent,
-    EditEmployeeComponent
+    EditEmployeeComponent,
+    AddEmployeeComponent
   ],
   imports: [
     BrowserModule,

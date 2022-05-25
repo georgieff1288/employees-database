@@ -51,13 +51,13 @@ export class EditEmployeeComponent implements OnInit {
     this.emp.updateEmployee(this.employeeForm.value, this.id).subscribe({
       next: res=> this.router.navigate(['/employees']),
       error: error => this.errorMsg = error            
-  });
+    });
   }
 
   delete(){    
     this.emp.deleteEmployee(this.id).subscribe({
       next: res=> this.router.navigate(['/employees']),
       error: error => this.errorMsg = error            
-  }); 
+    }); 
   }
 }
