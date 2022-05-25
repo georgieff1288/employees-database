@@ -7,7 +7,7 @@ import { Employee } from '../shared/models/employee.model';
   providedIn: 'root'
 })
 export class EmployeeService {
-  private endPoint = "http://localhost:3000/api/";
+  private endPoint = "http://localhost:3000/api/employees/";
 
   constructor(private http: HttpClient) { }
 

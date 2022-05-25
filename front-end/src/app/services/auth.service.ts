@@ -9,7 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AuthService {
 
-  private loginUrl = "http://localhost:3000/api/login";
+  private loginUrl = "http://localhost:3000/api/auth/login";
 
   constructor( private http: HttpClient, private router: Router, private cookies: CookieService ) { }
   
