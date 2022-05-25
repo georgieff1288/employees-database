@@ -6,13 +6,14 @@ import { EmployeesTableComponent } from './components/employees-table/employees-
 import { EditEmployeeComponent } from './components/edit-employee/edit-employee.component';
 import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'employees', component: EmployeesTableComponent },
-  { path: 'edit-employee/:id', component: EditEmployeeComponent },
-  { path: 'add-employee', component: AddEmployeeComponent },
+  { path: 'employees', canActivate:[AuthGuard], component: EmployeesTableComponent },
+  { path: 'edit-employee/:id', canActivate:[AuthGuard], component: EditEmployeeComponent },
+  { path: 'add-employee', canActivate:[AuthGuard], component: AddEmployeeComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 
