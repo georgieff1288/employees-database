@@ -3,13 +3,14 @@ const jwt = require('jsonwebtoken');
 const db = require('../config/msqlDb');
 const { SECRET, COOKIE_NAME } = require('../config/config');
 
-function isAuth (req, res, next) {
-    let token = req.cookies[COOKIE_NAME];
+function isAuth (req, res, next) {   
+    let token = req.cookies[COOKIE_NAME]; 
     if(!token){
         res.status(401).json({
             message: 'Unauthorized'
         });  
     }
+    else{
     let decodedToken = jwt.verify(token, SECRET);
     let dbUser = '';
     let sql = `SELECT * FROM users WHERE email = ?`;
@@ -27,6 +28,7 @@ function isAuth (req, res, next) {
         } 
     })
     next();
+    }
 }
 
 module.exports = isAuth;

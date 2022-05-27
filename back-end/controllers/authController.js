@@ -2,9 +2,11 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-const db = require('../config/msqlDb');
 const { SECRET, COOKIE_NAME } = require('../config/config');
+const db = require('../config/msqlDb');
 
+const Department = db.departments;
+const Position = db.positions;
 
 // login password for admin@abv.bg is 123456
 router.post('/login', (req, res)=>{
@@ -12,6 +14,7 @@ router.post('/login', (req, res)=>{
         email: req.body.email,
         password: req.body.password
     }
+
     let sql = `SELECT * FROM users WHERE email = ?`;
     let query = db.query(sql, user.email, (err, result) => {
         if(err){
@@ -43,6 +46,21 @@ router.post('/login', (req, res)=>{
             userEmail: dbUser.email
         });    
     })
+});
+
+router.get('/test', (req, res)=>{
+    async function get(){
+        let user = await Position.findAll({
+         include: [{
+             model: Department,
+             as: 'department'
+         }],
+         where: { position_id: 1 }
+     });
+        return user;
+     }
+     
+     get().then(response => res.send(response[0].department.department_name))
 });
 
 module.exports = router;
