@@ -44,7 +44,7 @@ export class EmployeeService {
   private handleError(error: HttpErrorResponse) {
     let errorMsg: string = '';
     if (error.status === 0) {
-      errorMsg =  'A client-side or network error occurred. Handle it accordingly.'
+      errorMsg =  'Server error';
     } else {
       errorMsg = error.error.message
     }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { EmployeeService } from 'src/app/services/employee.service';
 
 @Component({
@@ -7,20 +8,16 @@ import { EmployeeService } from 'src/app/services/employee.service';
   styleUrls: ['./employees-table.component.scss']
 })
 export class EmployeesTableComponent implements OnInit {
-  employees: any = [];
+  employees!: Observable<any>;
   errorMsg: string = '';
   notification: string ='Loading...';
   constructor(private emp: EmployeeService) { }
 
   ngOnInit(): void {    
-    this.emp.getAllEmployees().subscribe({
-      next: (res) => {
-          this.employees = res
-          this.notification = 'There is no employees in database'
-        },
-      error: (error) => this.errorMsg = error
-    });
+    this.employees = this.emp.getAllEmployees();
+    this.employees.subscribe({
+      next: () => this.notification = '',
+      error: (err) => {this.errorMsg = err, this.notification = ''}
+    })
   }
-
 }
-

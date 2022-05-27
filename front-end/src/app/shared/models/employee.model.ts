@@ -4,6 +4,6 @@ export interface Employee {
     address: string;
     phone: number;
     department: string;
-    position: string;
+    position_id: string;
     salary: number;
 }

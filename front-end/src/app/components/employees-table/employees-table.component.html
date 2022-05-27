@@ -1,7 +1,7 @@
 <div class="table-container container-fluid d-flex align-items-center justify-content-center py-3">
     <p *ngIf="errorMsg" class="large-text" style="color: red;">{{errorMsg}}</p>
-    <p *ngIf="employees.length==0 && !errorMsg" class="large-text">{{notification}}</p>
-    <div *ngIf="employees.length>0" class="emp-table" style="width: 100%">        
+    <p *ngIf="notification" class="large-text">{{notification}}</p>
+    <div *ngIf="!errorMsg && !notification" class="emp-table" style="width: 100%">        
         <table class="table">
             <thead>
                 <tr>
@@ -14,7 +14,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let employee of employees" class="employee-row">
+                <tr *ngFor="let employee of employees | async" class="employee-row">
                     <td class="small-text">{{employee.name}}</td>
                     <td class="small-text">{{employee.address}}</td>
                     <td class="small-text">{{employee.phone}}</td>
