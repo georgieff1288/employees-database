@@ -1,16 +1,11 @@
 const router = require('express').Router();
 
 const db = require('../config/msqlDb');
-const helpers = require('../utils/helpers');
+const fieldsValidator = require('../utils/fieldsValidator');
+const isAuth = require('../middlewares/isAuth');
 
-router.get('/employees', (req, res)=>{
-    let token = req.cookies.jwt;
-    let auth = helpers.isAuth(token);
-    if(auth){
-        return res.status(auth.status).json({
-            message: auth.message
-        })
-    }    
+
+router.get('/employees', isAuth, (req, res)=>{   
     let sql = 'SELECT * FROM employees INNER JOIN positions ON employees.position_id=positions.position_id INNER JOIN departments ON positions.department_id=departments.department_id ORDER BY name ASC';    
     let query = db.query(sql, (err, result) => {
         if(err){
@@ -23,14 +18,7 @@ router.get('/employees', (req, res)=>{
     })
 });
 
-router.get('/employee/:id', (req, res)=>{
-    let token = req.cookies.jwt;
-    let auth = helpers.isAuth(token);
-    if(auth){
-        return res.status(auth.status).json({
-            message: auth.message
-        })
-    }
+router.get('/employee/:id', isAuth, (req, res)=>{
     let data = req.params.id;
     let sql = 'SELECT * FROM employees INNER JOIN positions ON employees.position_id=positions.position_id WHERE id = ?';    
     let query = db.query(sql, data, (err, result) => {
@@ -44,17 +32,10 @@ router.get('/employee/:id', (req, res)=>{
     })
 });
 
-router.put('/update-employee/:id', (req, res)=>{
-    let token = req.cookies.jwt;
-    let auth = helpers.isAuth(token);
-    if(auth){
-        return res.status(auth.status).json({
-            message: auth.message
-        })
-    }       
+router.put('/update-employee/:id', isAuth, (req, res)=>{     
     let id = req.params.id;
     let emp = req.body;
-    let isValid = helpers.fieldsValidator(emp);
+    let isValid = fieldsValidator(emp);
     if(isValid){
         return res.status(isValid.status).json({
             message: isValid.message
@@ -74,14 +55,7 @@ router.put('/update-employee/:id', (req, res)=>{
     })
 });
 
-router.delete('/delete-employee/:id', (req, res)=>{
-    let token = req.cookies.jwt;
-    let auth = helpers.isAuth(token);
-    if(auth){
-        return res.status(auth.status).json({
-            message: auth.message
-        })
-    }        
+router.delete('/delete-employee/:id', isAuth, (req, res)=>{      
     let id = req.params.id;    
     let sql = 'DELETE FROM  employees WHERE id=?';    
     let query = db.query(sql, id, (err, result) => {
@@ -102,16 +76,9 @@ router.delete('/delete-employee/:id', (req, res)=>{
     })
 });
 
-router.post('/add-employee', (req, res)=>{
-    let token = req.cookies.jwt;
-    let auth = helpers.isAuth(token);
-    if(auth){
-        return res.status(auth.status).json({
-            message: auth.message
-        })
-    } 
+router.post('/add-employee', isAuth, (req, res)=>{
     let emp = req.body;
-    let isValid = helpers.fieldsValidator(emp);
+    let isValid = fieldsValidator(emp);
     if(isValid){
         return res.status(isValid.status).json({
             message: isValid.message
