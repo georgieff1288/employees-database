@@ -1,21 +1,19 @@
 const router = require('express').Router();
 
-const db = require('../config/msqlDb');
+const employee = require('../services/employee');
 const fieldsValidator = require('../utils/fieldsValidator');
 const isAuth = require('../middlewares/isAuth');
 
 
 router.get('/employees', isAuth, (req, res)=>{   
-    let sql = 'SELECT * FROM employees INNER JOIN positions ON employees.position_id=positions.position_id INNER JOIN departments ON positions.department_id=departments.department_id ORDER BY name ASC';    
-    let query = db.query(sql, (err, result) => {
-        if(err){
-            console.log(err);
-            return res.status(500).json({
-                message: 'Server error'
-            })
-        }
-        res.send(result)
-    })
+    employee.getAllEmployees().then((response) => {
+        res.send(response)
+    }). catch((err) => {
+        console.log(err);
+        return res.status(500).json({
+            message: 'Server error'
+        });
+    });
 });
 
 router.get('/employee/:id', isAuth, (req, res)=>{

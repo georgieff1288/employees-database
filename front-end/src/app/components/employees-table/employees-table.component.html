@@ -18,8 +18,8 @@
                     <td class="small-text">{{employee.name}}</td>
                     <td class="small-text">{{employee.address}}</td>
                     <td class="small-text">{{employee.phone}}</td>
-                    <td class="small-text">{{employee.department_name}}</td>
-                    <td class="small-text">{{employee.position_name}}</td>
+                    <td class="small-text">{{employee.position.department.department_name}}</td>
+                    <td class="small-text">{{employee.position.position_name}}</td>
                     <td class="small-text">${{employee.salary}}</td>      
                     <td><a class="small-text p-1" routerLink="/edit-employee/{{employee.id}}">Edit</a></td>                                    
                 </tr>                            

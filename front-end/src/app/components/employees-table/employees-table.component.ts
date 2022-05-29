@@ -16,8 +16,14 @@ export class EmployeesTableComponent implements OnInit {
   ngOnInit(): void {    
     this.employees = this.emp.getAllEmployees();
     this.employees.subscribe({
-      next: () => this.notification = '',
+      next: (res) => {
+        if(res.length > 0){
+          this.notification = ''
+        }else{
+          this.notification = 'There is no employees in database.'
+        }
+      },
       error: (err) => {this.errorMsg = err, this.notification = ''}
-    })
+    })    
   }
 }
