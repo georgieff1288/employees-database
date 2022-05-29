@@ -37,39 +37,30 @@ router.put('/update-employee/:id', isAuth, (req, res)=>{
             message: isValid.message
         })
     }    
-    let sql = 'UPDATE employees SET name=?, address=?, phone=?, position_id=?, salary=? WHERE id=?';
-    let query = db.query(sql, [emp.name, emp.address, emp.phone, emp.position_id, emp.salary, id], (err, result) => {
-        if(err){
-            console.log(err);
-            return res.status(500).json({
-                message: 'Server error'
-            })
-        }
+    employee.updateEmployee(emp, id).then(() => {
         return res.status(200).json({
             message: 'Field updated successfully'
-        })
-    })
+        });
+    }).catch((err) => {
+        console.log(err);
+        return res.status(500).json({
+            message: 'Server error'
+        });
+    });
 });
 
 router.delete('/delete-employee/:id', isAuth, (req, res)=>{      
-    let id = req.params.id;    
-    let sql = 'DELETE FROM  employees WHERE id=?';    
-    let query = db.query(sql, id, (err, result) => {
-        if(err){
-            console.log(err);
-            return res.status(500).json({
-                message: 'Server error'
-            })
-        }
-        if(result.affectedRows == 0){
-            return res.status(404).json({
-                message: 'An employee with such id was not found'
-            })
-        }
+    let id = req.params.id;
+    employee.deleteEmployee(id).then(() => {
         return res.status(200).json({
             message: 'Field deleted successfully'
-        })
-    })
+        });
+    }).catch((err) => {
+        console.log(err);
+        return res.status(500).json({
+            message: 'Server error'
+        });
+    })    
 });
 
 router.post('/add-employee', isAuth, (req, res)=>{
@@ -80,18 +71,16 @@ router.post('/add-employee', isAuth, (req, res)=>{
             message: isValid.message
         })
     }    
-    let sql = 'INSERT INTO employees (name, address, phone, position_id, salary) VALUES(?, ?, ?, ?, ?)';
-    let query = db.query(sql, [emp.name, emp.address, emp.phone, emp.position_id, emp.salary], (err, result) => {
-        if(err){
-            console.log(err);
-            return res.status(500).json({
-                message: 'Server error'
-            })
-        }
+    employee.addEmployee(emp).then(() => {
         return res.status(200).json({
             message: 'The employee was added successfully'
-        })
-    })
+        });
+    }).catch((err) => {
+        console.log(err);
+        return res.status(500).json({
+            message: 'Server error'
+        });
+    });
 });
 
 

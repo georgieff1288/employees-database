@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 
 
 const { SECRET, COOKIE_NAME } = require('../config/config');
-const getUser = require('../services/auth');
+const auth = require('../services/auth');
 
 
 // login password for admin@abv.bg and admin2@abv.bg is 123456
@@ -13,7 +13,7 @@ router.post('/login', (req, res)=>{
         email: req.body.email,
         password: req.body.password
     }
-    getUser(user.email).then((response)=>{
+    auth.getUser(user.email).then((response)=>{
         if(!response){
             return res.status(401).json({
                 message: 'Invalid credentials'
@@ -38,7 +38,7 @@ router.post('/login', (req, res)=>{
         console.log(err);
         return res.status(500).json({
             message: 'Server error'
-          });
+        });
     });
 });
 

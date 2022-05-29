@@ -7,4 +7,6 @@ const getUser = async (email) => {
     return result
 } 
 
-module.exports = getUser;
+module.exports = {
+    getUser
+};

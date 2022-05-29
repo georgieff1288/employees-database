@@ -32,13 +32,14 @@ db.positions.belongsTo(db.departments, {
     as: 'department'
 });
 
-db.employees.hasOne(db.positions, {
-  foreignKey: 'position_id',
-  as: 'position'
-});
-db.positions.belongsTo(db.employees, {
+db.positions.hasMany(db.employees, {
   foreignKey: 'position_id',
   as: 'employee'
 });
+db.employees.belongsTo(db.positions, {
+  foreignKey: 'position_id',
+  as: 'position'
+});
+
 
 module.exports = db;
