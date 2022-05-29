@@ -1,7 +1,7 @@
 const db = require('../config/msqlDb');
-let Position = db.positions;
-let Employee = db.employees;
-let Department = db.departments;
+const Position = db.positions;
+const Employee = db.employees;
+const Department = db.departments;
 
 const getAllEmployees = async () => {
     let employees = await Employee.findAll({
