@@ -26,11 +26,21 @@ db.employees = require('../models/employee')(sequelize, DataTypes);
 db.departments.hasMany(db.positions, {
     foreignKey: 'department_id',
     as: 'position'
-})
+});
 
 db.positions.belongsTo(db.departments, {
     foreignKey: 'department_id',
     as: 'department'
-})
+});
+
+db.employees.hasMany(db.positions, {
+  foreignKey: 'position_id',
+  as: 'position'
+});
+
+db.positions.belongsTo(db.employees, {
+  foreignKey: 'position_id',
+  as: 'employee'
+});
 
 module.exports = db;
