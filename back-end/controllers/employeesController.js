@@ -17,17 +17,15 @@ router.get('/employees', isAuth, (req, res)=>{
 });
 
 router.get('/employee/:id', isAuth, (req, res)=>{
-    let data = req.params.id;
-    let sql = 'SELECT * FROM employees INNER JOIN positions ON employees.position_id=positions.position_id WHERE id = ?';    
-    let query = db.query(sql, data, (err, result) => {
-        if(err){
-            console.log(err);
-            return res.status(500).json({
-                message: 'Server error'
-            })
-        }
-        res.send(result)
-    })
+    let id = req.params.id;
+    employee.getEmployeeById(id).then((response) => {
+        res.send(response);
+    }).catch((err) => {
+        console.log(err);
+        return res.status(500).json({
+            message: 'Server error'
+        });
+    });
 });
 
 router.put('/update-employee/:id', isAuth, (req, res)=>{     

@@ -14,11 +14,27 @@ const getAllEmployees = async () => {
             }]
         }]
     });
-    return employees
+    return employees;
+};
+
+const getEmployeeById = async (id) => {
+    let employee = await Employee.findAll({
+        where: {id: id},
+        include: [{
+            model: Position,
+            as: 'position',
+            include: [{
+                model: Department,
+                as: 'department'
+            }]
+        }]
+    });
+    return employee;
 };
 
 
 
 module.exports = {
     getAllEmployees,
+    getEmployeeById,
 }

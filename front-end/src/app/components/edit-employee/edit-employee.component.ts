@@ -33,15 +33,19 @@ export class EditEmployeeComponent implements OnInit, OnDestroy {
     this.id = this.route.snapshot.params['id'];  
 
     this.empSubscription = this.emp.getEmployeeById(this.id).subscribe({
-      next: (res) => {
+      next: (res) => {        
         this.employee = res; 
-        this.employeeForm.patchValue({
-          name: this.employee[0].name,
-          address: this.employee[0].address,
-          phone: this.employee[0].phone,
-          position_id: this.employee[0].position_id,
-          salary: this.employee[0].salary         
-        });        
+        if(this.employee.length>0){
+          this.employeeForm.patchValue({
+            name: this.employee[0].name,
+            address: this.employee[0].address,
+            phone: this.employee[0].phone,
+            position_id: this.employee[0].position_id,
+            salary: this.employee[0].salary         
+          }); 
+        }else{
+          this.errorMsg ='There is no such employee.';
+        }                             
       },
       error: (error) => this.errorMsg = error
     });  
