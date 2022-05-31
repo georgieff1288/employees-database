@@ -1,4 +1,4 @@
 <div class="container-fluid home-container d-flex align-items-center justify-content-center">
     <h1 *ngIf="!auth.isLoggedIn" class="text-center large-text">Welcome to eployees database. If you have an account you can <a routerLink="/login" style="color: #262626;">login</a> to create, read, update or delete employees.</h1>
-    <h1 *ngIf="auth.isLoggedIn" class="text-center large-text">Wlelcome to eployees database, {{email}}. You can create, read, update ot delete employees.</h1>
+    <h1 *ngIf="auth.isLoggedIn" class="text-center large-text">Wlelcome to eployees database, {{email}}. You can create, read, update or delete employees.</h1>
 </div>

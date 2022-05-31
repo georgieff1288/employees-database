@@ -24,8 +24,8 @@ export class AuthService {
   }
 
   get isLoggedIn(): boolean {
-    let authToken = localStorage.getItem('access_token');    
-    return authToken !== null ? true : false;    
+    let cookieExists: boolean = this.cookies.check('jwt');
+    return cookieExists
   }
 
   get getUserEmail() {
